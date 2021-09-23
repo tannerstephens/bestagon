@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "a73ba35ec3b8012c04b53c4ba8c3c2c7398ead0871e0b600c2d595c4c8e24aab"
+            "sha256": "370a550f3988a2974c86c709147a261f468bba8eb51ec12a260267e542c227ab"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -40,7 +40,7 @@
             "hashes": [
                 "sha256:726782879e1dc18c1b2f50301ab3f04c3a7817a54e35c955ee2bb64a6d60df74"
             ],
-            "markers": "python_full_version >= '3.6.0'",
+            "markers": "python_version >= '3.6'",
             "version": "==3.15.3"
         },
         "adafruit-pureio": {
@@ -114,7 +114,7 @@
                 "sha256:4ef20c246bdb0f278d283337d7a6e69cf9bdb0ead525e7ad867d9e46ad26e613",
                 "sha256:6e86880ec6d66389de643ca83de5d59fffea3bd334f492e12fab71a832f878a2"
             ],
-            "markers": "python_full_version >= '3.6.0'",
+            "markers": "python_version >= '3.6'",
             "version": "==0.53.3"
         },
         "pyserial": {
@@ -129,8 +129,16 @@
                 "sha256:2b4c7cb86dbadf044dfb9d3a4ff69fd217013dbe78a792177a3feb172449ea36",
                 "sha256:a4cc7404a203144754164b8b40994e2849fde1cfff06b08492f12fff9d9de7b9"
             ],
-            "markers": "python_full_version >= '3.6.0'",
+            "markers": "python_version >= '3.6'",
             "version": "==1.2.1"
+        },
+        "redis": {
+            "hashes": [
+                "sha256:0e7e0cfca8660dea8b7d5cd8c4f6c5e29e11f31158c0b0ae91a397f00e5a05a2",
+                "sha256:432b788c4530cfe16d8d943a09d40ca6c16149727e4afe8c2c9d5580c59d9f24"
+            ],
+            "index": "pypi",
+            "version": "==3.5.3"
         },
         "rpi-ws281x": {
             "hashes": [

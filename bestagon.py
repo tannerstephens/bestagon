@@ -3,6 +3,11 @@ import board
 import neopixel
 import random
 import math
+import redis
+
+
+redis_connection = redis.Redis(host='localhost', port=6379, db=0)
+
 
 pixel_pin = board.D18
 num_pixels = 127
@@ -29,19 +34,26 @@ pixels.show()
 flash = [0 for _ in range(num_pixels)]
 
 while True:
-  for i in range(num_pixels):
-    if pixels[i] != [0,0,0]:
-      if flash[i]:
-        flash[i] -= 1
+  state = redis_connection.get('state').decode()
 
-        if flash[i] == 0:
-          pixels[i] = sparkle_color
-      else:
-        p = pixels[i]
-        pixels[i] = (max(p[0] - dr,0),max(p[1] - dg,0),max(p[2] - db,0))
+  if state == 'sparkle':
+    for i in range(num_pixels):
+      if pixels[i] != [0,0,0]:
+        if flash[i]:
+          flash[i] -= 1
 
-    if random.randint(0,out_of) < sparkle_chance:
-      pixels[i] = flash_color
-      flash[i] = flash_steps
-  pixels.show()
-  time.sleep(sleep)
+          if flash[i] == 0:
+            pixels[i] = sparkle_color
+        else:
+          p = pixels[i]
+          pixels[i] = (max(p[0] - dr,0),max(p[1] - dg,0),max(p[2] - db,0))
+
+      if random.randint(0,out_of) < sparkle_chance:
+        pixels[i] = flash_color
+        flash[i] = flash_steps
+    pixels.show()
+    time.sleep(sleep)
+  else:
+    pixels.fill((0,0,0))
+    pixels.show()
+    time.sleep(0.5)
