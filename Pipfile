@@ -11,6 +11,8 @@ adafruit-blinka = "*"
 redis = "*"
 flask = "*"
 gunicorn = "*"
+"rpi.gpio" = "*"
+flask-redis = "*"
 
 [dev-packages]
 
