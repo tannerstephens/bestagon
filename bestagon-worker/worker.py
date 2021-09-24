@@ -2,7 +2,7 @@ import time
 import board
 import neopixel
 import redis
-import glob
+from glob import glob
 from os import path
 
 from importlib.util import spec_from_file_location, module_from_spec
