@@ -1,6 +1,6 @@
 from flask import Blueprint
 from flask.templating import render_template
-from ..update import update
+from ..update import update as update_app
 
 pages = Blueprint('pages', __name__)
 
@@ -12,6 +12,6 @@ def home():
 
 @pages.route('/update')
 def update():
-  update()
+  update_app()
 
   return render_template('update.html')
