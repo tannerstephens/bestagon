@@ -18,7 +18,7 @@ class Rain:
 
     self.top_width = 7
 
-    self.decay_steps = 20
+    self.decay_steps = 7
 
     self.dr = math.ceil(self.color[0] // self.decay_steps + 0.5)
     self.dg = math.ceil(self.color[1] // self.decay_steps + 0.5)
