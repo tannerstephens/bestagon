@@ -1,0 +1,12 @@
+[Unit]
+Description=Bestagon Worker
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/bestagon/bestagon-worker
+ExecStart=/srv/bestagon/.venv/bin/python worker.py
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target

@@ -7,3 +7,8 @@ pages = Blueprint('pages', __name__)
 @pages.route('/')
 def home():
   return render_template('home.html')
+
+
+@pages.route('/update')
+def update():
+  pass
