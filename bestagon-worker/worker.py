@@ -3,7 +3,7 @@ import board
 import neopixel
 import redis
 
-from .effects.sparkle import Sparkle
+from effects.sparkle import Sparkle
 
 pixel_pin = board.D18
 num_pixels = 127
