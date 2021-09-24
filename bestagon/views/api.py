@@ -54,3 +54,11 @@ def updating():
   return jsonify({
     'updating': updating == 'true'
   })
+
+@api.route('/effects')
+def get_effects():
+  effects = flask_redis.lrange('effects', 0, -1)
+
+  effects_decoded = [effect.decode() for effect in effects]
+
+  return jsonify(effects_decoded)
