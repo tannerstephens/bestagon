@@ -8,6 +8,7 @@ import redis
 
 redis_connection = redis.Redis(host='localhost', port=6379, db=0)
 
+redis_connection.set('updating', 'false')
 
 pixel_pin = board.D18
 num_pixels = 127

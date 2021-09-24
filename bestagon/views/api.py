@@ -45,3 +45,11 @@ def update_handler():
   return jsonify({
     'success': False
   })
+
+@api.route('/updating')
+def updating():
+  updating = flask_redis.get('updating') or b'false'
+
+  return jsonify({
+    'updating': updating == 'true'
+  })

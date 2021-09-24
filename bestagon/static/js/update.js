@@ -1,5 +1,6 @@
 window.onload = () => {
   const updateButton = document.getElementById('updateButton');
+  const spinner = document.getElementById('spinner');
   updateButton.disabled = true;
 
   updateButton.onclick = () => {
@@ -7,9 +8,27 @@ window.onload = () => {
       return;
     }
 
-    fetch('/api/update', {
-      method: 'POST'
-    });
+    fetch('/api/update', {method: 'POST'})
+      .then(response => response.json())
+      .then(data => {
+        if(data.success) {
+          updateButton.disabled = true;
+          spinner.classList.remove('is-hidden');
+
+          const checkReload = () => {
+            fetch('/api/updating')
+              .then(response => response.json())
+              .then(data => {
+                if(!data.updating) {
+                  window.location = '/';
+                }
+              });
+
+            setTimeout(checkReload, 5000);
+          }
+          checkReload();
+        }
+      })
   };
 
   fetch('/api/update')
