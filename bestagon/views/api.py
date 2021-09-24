@@ -1,6 +1,7 @@
 from flask import Blueprint, request, jsonify
 
 from ..extensions import flask_redis
+from ..update import check_for_update, update
 
 api = Blueprint('api', __name__, url_prefix='/api')
 
@@ -25,4 +26,22 @@ def state():
 
   return jsonify({
     'success': True
+  })
+
+@api.route('/update', methods=['GET', 'POST'])
+def update_handler():
+  if request.method == 'GET':
+    return jsonify({
+      'update_available': check_for_update()
+    })
+
+  if check_for_update():
+    update()
+
+    return jsonify({
+      'success': True
+    })
+
+  return jsonify({
+    'success': False
   })

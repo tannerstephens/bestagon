@@ -12,6 +12,4 @@ def home():
 
 @pages.route('/update')
 def update():
-  update_app()
-
   return render_template('update.html')
