@@ -21,10 +21,11 @@ class Worker:
     self.redis_connection.set('updating', 'false')
 
     self.redis_connection.delete('effects')
-
-  def _load_effects(self):
     self.effects = {}
 
+    self._load_effects()
+
+  def _load_effects(self):
     for i, effect_path in enumerate(glob(f'{DIR}/effects/*.py')):
       spec = spec_from_file_location(f'plugin{i}', effect_path)
       effect = module_from_spec(spec)
