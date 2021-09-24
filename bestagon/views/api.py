@@ -49,6 +49,7 @@ def update_handler():
 @api.route('/updating')
 def updating():
   updating = flask_redis.get('updating') or b'false'
+  updating = updating.decode()
 
   return jsonify({
     'updating': updating == 'true'
