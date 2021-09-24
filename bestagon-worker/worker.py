@@ -2,29 +2,56 @@ import time
 import board
 import neopixel
 import redis
+import glob
+from os import path
 
-from effects.sparkle import Sparkle
+from importlib.util import spec_from_file_location, module_from_spec
 
-pixel_pin = board.D18
-num_pixels = 127
+DIR = path.dirname(path.abspath(__file__))
 
-pixels = neopixel.NeoPixel(pixel_pin, num_pixels, brightness=0.2,
-  auto_write=False, pixel_order=neopixel.RGB)
+class Worker:
+  def __init__(self):
+    self.pixel_pin = board.D18
+    self.num_pixels = 127
 
-redis_connection = redis.Redis(host='localhost', port=6379, db=0)
-redis_connection.set('updating', 'false')
+    self.pixels = neopixel.NeoPixel(self.pixel_pin, self.num_pixels, brightness=0.2,
+      auto_write=False, pixel_order=neopixel.RGB)
 
-pixels.fill((0,0,0))
-pixels.show()
+    self.redis_connection = redis.Redis(host='localhost', port=6379, db=0)
+    self.redis_connection.set('updating', 'false')
 
-s = Sparkle(pixels)
+    self.redis_connection.delete('effects')
 
-while True:
-  state = redis_connection.get('state').decode()
+  def _load_effects(self):
+    self.effects = {}
 
-  if state == 'sparkle':
-    s.run()
-  else:
-    pixels.fill((0,0,0))
-    pixels.show()
-    time.sleep(0.5)
+    for i, effect_path in enumerate(glob(f'{DIR}/effects/*.py')):
+      spec = spec_from_file_location(f'plugin{i}', effect_path)
+      effect = module_from_spec(spec)
+      spec.loader.exec_module(effect)
+
+      registered_effect = effect.register()
+
+      clazz = registered_effect['class']
+      name = registered_effect['name']
+
+      self.effects[name] = clazz(self.pixels)
+      self.redis_connection.rpush(name)
+
+  def run(self):
+    self.pixels.fill((0,0,0))
+    self.pixels.show()
+
+    while True:
+      state = self.redis_connection.get('state').decode()
+
+      if state in self.effects:
+        self.effects[state].run()
+      else:
+        self.pixels.fill((0,0,0))
+        self.pixels.show()
+        time.sleep(0.5)
+
+if __name__ == '__main__':
+  worker = Worker()
+  worker.run()
