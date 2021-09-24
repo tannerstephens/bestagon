@@ -3,7 +3,7 @@ import random
 import time
 
 class Sparkle:
-  def __init__(self, pixels):
+  def __init__(self, pixels, _):
     self.pixels = pixels
 
     self.sleep = 0.05

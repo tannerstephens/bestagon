@@ -1,7 +1,7 @@
 import time
 
 class Solid:
-  def __init__(self, pixels):
+  def __init__(self, pixels, _):
     self.pixels = pixels
     self.color = (128,128,128)
 

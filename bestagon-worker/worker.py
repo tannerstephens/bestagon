@@ -6,6 +6,7 @@ from glob import glob
 from os import path
 
 from importlib.util import spec_from_file_location, module_from_spec
+from led_map import led_map
 
 DIR = path.dirname(path.abspath(__file__))
 
@@ -36,7 +37,7 @@ class Worker:
       clazz = registered_effect['class']
       name = registered_effect['name']
 
-      self.effects[name] = clazz(self.pixels)
+      self.effects[name] = clazz(self.pixels, led_map)
       self.redis_connection.rpush('effects', name)
 
   def run(self):
