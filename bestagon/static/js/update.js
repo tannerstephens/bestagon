@@ -26,7 +26,7 @@ window.onload = () => {
 
             setTimeout(checkReload, 5000);
           }
-          checkReload();
+          setTimeout(checkReload, 5000);
         }
       })
   };
