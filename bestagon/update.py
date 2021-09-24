@@ -7,4 +7,5 @@ def update():
 
 
 def _update():
+  subprocess.call(['git', 'pull'], cwd='/srv/bestagon/')
   subprocess.call(['/bin/bash', '/srv/bestagon/install.sh'])
