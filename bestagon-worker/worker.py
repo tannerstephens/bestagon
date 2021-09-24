@@ -40,11 +40,14 @@ class Worker:
       self.redis_connection.rpush('effects', name)
 
   def run(self):
-    self.pixels.fill((0,0,0))
-    self.pixels.show()
+    last_state = None
 
     while True:
       state = self.redis_connection.get('state').decode()
+
+      if last_state != state:
+        self.pixels.fill((0,0,0))
+        self.pixels.show()
 
       if state in self.effects:
         self.effects[state].run()
@@ -52,6 +55,8 @@ class Worker:
         self.pixels.fill((0,0,0))
         self.pixels.show()
         time.sleep(0.5)
+
+      last_state = state
 
 if __name__ == '__main__':
   worker = Worker()
