@@ -10,7 +10,7 @@ def check_for_update():
   git_status = subprocess.Popen(['git', 'status', '-uno'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
   out, err = git_status.communicate()
 
-  return 'Your branch is behind' in out
+  return 'Your branch is behind' in out.decode()
 
 def _update():
   subprocess.call(['git', 'pull'], cwd='/srv/bestagon/')
