@@ -2,7 +2,7 @@ from flask import Flask
 
 from .views import register_views
 
-VERSION = '0.0.1'
+VERSION = '0.0.2'
 
 def create_app():
   app = Flask(__name__)
