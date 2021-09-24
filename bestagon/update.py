@@ -3,7 +3,7 @@ import subprocess
 
 
 def update():
-  threading.Thread(target=_update, daemon=True).start()
+  threading.Thread(target=_update).start()
 
 
 def _update():
