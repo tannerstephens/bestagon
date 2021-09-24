@@ -9,8 +9,10 @@ rpi-ws281x = "*"
 adafruit-circuitpython-neopixel = "*"
 adafruit-blinka = "*"
 redis = "*"
+flask = "*"
+gunicorn = "*"
 
 [dev-packages]
 
 [requires]
-python_version = "3.9"
+python_version = "3.7"

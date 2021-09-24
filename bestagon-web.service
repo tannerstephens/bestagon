@@ -1,0 +1,12 @@
+[Unit]
+Description=bestagon-web
+After=network.target
+
+[Service]
+Type=simple
+WorkingDirectory=/srv/bestagon
+ExecStart=/srv/bestagon/.venv/bin/gunicorn --bind 0.0.0.0:80 -w 4 "bestagon:create_app()"
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
