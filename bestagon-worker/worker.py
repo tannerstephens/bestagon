@@ -37,7 +37,7 @@ class Worker:
       name = registered_effect['name']
 
       self.effects[name] = clazz(self.pixels)
-      self.redis_connection.rpush(name)
+      self.redis_connection.rpush('effects', name)
 
   def run(self):
     self.pixels.fill((0,0,0))
