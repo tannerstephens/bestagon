@@ -6,7 +6,7 @@ from .extensions import (
   flask_redis
 )
 
-VERSION = '0.0.2'
+VERSION = '0.0.3'
 
 def create_app(config='bestagon.config.Config'):
   app = Flask(__name__)
