@@ -6,3 +6,5 @@ cp bestagon-worker.service /etc/systemd/system/bestagon-worker.service
 systemctl daemon-reload
 systemctl restart bestagon-web
 systemctl restart bestagon-worker
+systemctl enable bestagon-web
+systemctl enable bestagon-worker
