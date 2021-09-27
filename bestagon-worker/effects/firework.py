@@ -41,18 +41,15 @@ class Firework(Effect):
   def __init__(self, pixels):
     super().__init__(pixels)
     self.pixels = pixels
-    self.color = (255,255,255)
 
     self.chance = 1
     self.out_of = 1000
 
     self.ripples = []
 
-    self.decay_steps = 3
-
-    self.dr = math.ceil(self.color[0] // self.decay_steps + 0.5)
-    self.dg = math.ceil(self.color[1] // self.decay_steps + 0.5)
-    self.db = math.ceil(self.color[2] // self.decay_steps + 0.5)
+    self.dr = 85
+    self.dg = 85
+    self.db = 85
 
     self.sleep = 0.05
 
@@ -67,8 +64,9 @@ class Firework(Effect):
 
     for point in led_map:
       if random.randint(0,self.out_of) < self.chance:
-        self.ripples.append(Rip(point, self.pixels, random_color()))
-        self.pixels[led_map[point]] = self.color
+        color = random_color()
+        self.ripples.append(Rip(point, self.pixels, color))
+        self.pixels[led_map[point]] = color
 
     self.ripples = list(filter(lambda ripple: not ripple.is_empty(), self.ripples))
 
