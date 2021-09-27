@@ -3,7 +3,7 @@ import time
 import math
 
 from ..led_map import led_map
-from ._effect import Effect
+from _effect import Effect
 
 class Rain(Effect):
   NAME = 'Rain'

@@ -3,7 +3,7 @@ import time
 import random
 
 from ..led_map import led_map
-from ._effect import Effect
+from _effect import Effect
 
 def random_color():
   return (random.randint(0,255),random.randint(0,255),random.randint(0,255))

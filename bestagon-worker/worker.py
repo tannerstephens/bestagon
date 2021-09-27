@@ -3,7 +3,7 @@ import board
 import neopixel
 import redis
 
-from .effects import effects
+from effects import effects
 
 class Worker:
   def __init__(self):

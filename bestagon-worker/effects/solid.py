@@ -1,6 +1,6 @@
 import time
 
-from ._effect import Effect
+from _effect import Effect
 
 
 class Solid(Effect):

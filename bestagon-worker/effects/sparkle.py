@@ -2,7 +2,7 @@ import math
 import random
 import time
 
-from ._effect import Effect
+from _effect import Effect
 
 
 class Sparkle(Effect):

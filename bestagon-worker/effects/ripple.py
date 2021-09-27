@@ -3,7 +3,7 @@ import time
 import random
 
 from ..led_map import led_map
-from ._effect import Effect
+from _effect import Effect
 
 class Rip:
   def __init__(self, led_map, start):
