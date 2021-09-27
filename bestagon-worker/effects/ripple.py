@@ -35,7 +35,7 @@ class Ripple:
     self.color = (255,255,255)
 
     self.chance = 1
-    self.out_of = 100
+    self.out_of = 1000
 
     self.ripples = []
 
