@@ -6,6 +6,8 @@ from ._effect import Effect
 
 
 class Sparkle(Effect):
+  NAME = 'Sparkle'
+
   def __init__(self, pixels):
     super().__init__(pixels)
 
