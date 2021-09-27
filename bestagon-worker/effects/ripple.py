@@ -62,6 +62,8 @@ class Ripple:
         self.ripples.append(Rip(self.led_map, point))
         self.pixels[self.led_map[point]] = self.color
 
+    self.ripples = list(filter(lambda ripple: not ripple.is_empty(), self.ripples))
+
     self.pixels.show()
     time.sleep(self.sleep)
 
