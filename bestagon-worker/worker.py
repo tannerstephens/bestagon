@@ -14,8 +14,6 @@ class Worker:
       auto_write=False, pixel_order=neopixel.RGB)
 
     self.redis_connection = redis.Redis(host='localhost', port=6379, db=0)
-    self.redis_connection.set('updating', 'false')
-
     self.redis_connection.delete('effects')
     self.effects = {}
 
@@ -32,6 +30,8 @@ class Worker:
       self.redis_connection.rpush('effects', name)
 
   def run(self):
+    self.redis_connection.set('updating', 'false')
+
     last_state = None
 
     while True:
