@@ -2,9 +2,12 @@ import math
 import time
 import random
 
+from ..led_map import led_map
+from ._effect import Effect
+
 class Rip:
   def __init__(self, led_map, start):
-    self.led_map = led_map
+    led_map = led_map
     self.active = {start}
     self.seen = set()
 
@@ -16,22 +19,23 @@ class Rip:
     for p in self.active:
       for q, r in ((0,-1),(1,-1),(-1,0),(1,0),(-1,1),(0,1)):
           check = (p[0] + q, p[1] + r)
-          if check not in self.seen and check in self.led_map:
+          if check not in self.seen and check in led_map:
             new_active.add(check)
 
 
     self.active = new_active
 
     for p in self.active:
-      yield self.led_map[p]
+      yield led_map[p]
 
   def is_empty(self):
     return len(self.active) == 0
 
-class Ripple:
-  def __init__(self, pixels, led_map):
-    self.pixels = pixels
-    self.led_map = led_map
+class Ripple(Effect):
+  NAME = 'Ripple'
+
+  def __init__(self, pixels):
+    super().__init__(pixels)
     self.color = (255,255,255)
 
     self.chance = 1
@@ -57,19 +61,12 @@ class Ripple:
       for p in r.step():
         self.pixels[p] = self.color
 
-    for point in self.led_map:
+    for point in led_map:
       if random.randint(0,self.out_of) < self.chance:
-        self.ripples.append(Rip(self.led_map, point))
-        self.pixels[self.led_map[point]] = self.color
+        self.ripples.append(Rip(led_map, point))
+        self.pixels[led_map[point]] = self.color
 
     self.ripples = list(filter(lambda ripple: not ripple.is_empty(), self.ripples))
 
     self.pixels.show()
     time.sleep(self.sleep)
-
-def register():
-  return {
-    'class': Ripple,
-    'name': 'Ripple',
-    'configs': {}
-  }

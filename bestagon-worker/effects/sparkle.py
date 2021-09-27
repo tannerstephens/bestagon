@@ -2,9 +2,12 @@ import math
 import random
 import time
 
-class Sparkle:
-  def __init__(self, pixels, _):
-    self.pixels = pixels
+from ._effect import Effect
+
+
+class Sparkle(Effect):
+  def __init__(self, pixels):
+    super().__init__(pixels)
 
     self.sleep = 0.05
     self.sparkle_color = (36,80,255)
@@ -38,10 +41,3 @@ class Sparkle:
         self.flash[i] = self.flash_steps
     self.pixels.show()
     time.sleep(self.sleep)
-
-def register():
-  return {
-    'class': Sparkle,
-    'name': 'Sparkle',
-    'configs': {}
-  }

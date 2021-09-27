@@ -2,10 +2,14 @@ import random
 import time
 import math
 
-class Rain:
-  def __init__(self, pixels, led_map):
-    self.pixels = pixels
-    self.led_map = led_map
+from ..led_map import led_map
+from ._effect import Effect
+
+class Rain(Effect):
+  NAME = 'Rain'
+
+  def __init__(self, pixels):
+    super().__init__(pixels)
     self.color = (255,255,255)
     self.sleep = 0.05
 
@@ -34,12 +38,12 @@ class Rain:
       if random.getrandbits(1): # Left
         dq = -1
 
-        if(drop[0] + dq, drop[1] + 1) not in self.led_map:
+        if(drop[0] + dq, drop[1] + 1) not in led_map:
           dq = 0
       else: # Right
         dq = 0
 
-        if(drop[0] + dq, drop[1] + 1) not in self.led_map:
+        if(drop[0] + dq, drop[1] + 1) not in led_map:
           dq = -1
 
       drop[0] += dq
@@ -54,14 +58,7 @@ class Rain:
     for drop in self.drops:
       t = tuple(drop)
 
-      self.pixels[self.led_map[t]] = self.color
+      self.pixels[led_map[t]] = self.color
 
     self.pixels.show()
     time.sleep(self.sleep)
-
-def register():
-  return {
-    'class': Rain,
-    'name': 'Rain',
-    'configs': {}
-  }

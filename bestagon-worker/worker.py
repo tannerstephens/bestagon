@@ -2,13 +2,8 @@ import time
 import board
 import neopixel
 import redis
-from glob import glob
-from os import path
 
-from importlib.util import spec_from_file_location, module_from_spec
-from led_map import led_map
-
-DIR = path.dirname(path.abspath(__file__))
+from .effects import effects
 
 class Worker:
   def __init__(self):
@@ -27,17 +22,13 @@ class Worker:
     self._load_effects()
 
   def _load_effects(self):
-    for i, effect_path in enumerate(glob(f'{DIR}/effects/*.py')):
-      spec = spec_from_file_location(f'plugin{i}', effect_path)
-      effect = module_from_spec(spec)
-      spec.loader.exec_module(effect)
-
+    for effect in effects:
       registered_effect = effect.register()
 
       clazz = registered_effect['class']
       name = registered_effect['name']
 
-      self.effects[name] = clazz(self.pixels, led_map)
+      self.effects[name] = clazz(self.pixels)
       self.redis_connection.rpush('effects', name)
 
   def run(self):
