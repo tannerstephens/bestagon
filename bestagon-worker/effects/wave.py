@@ -23,7 +23,8 @@ class Wave(Effect):
 
     self.rings.append((126,126))
 
-    self.phase_step = 2*pi / 7
+    self.phase_step = 2*pi / 20
+    self.ring_step = 2*pi / 7
 
   def run(self):
     self.phase += self.phase_step
@@ -37,7 +38,7 @@ class Wave(Effect):
 
       s = (sin(self.phase + self.phase_step * i)+1)/2
 
-      ring_color = (int(self.color[0] / s), int(self.color[1] / s), int(self.color[2] / s))
+      ring_color = (int(self.color[0] * s), int(self.color[1] * s), int(self.color[2] * s))
 
       for l in range(start,end+1):
         self.pixels[l] = ring_color
