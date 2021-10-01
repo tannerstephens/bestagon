@@ -1,6 +1,5 @@
 from flask import Blueprint
 from flask.templating import render_template
-from ..update import update as update_app
 
 pages = Blueprint('pages', __name__)
 

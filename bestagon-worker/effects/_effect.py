@@ -6,7 +6,7 @@ class Effect:
     self.pixels = pixels
 
   def run(self):
-    pass
+    raise Exception(f'"run()" not implemented for {self.NAME}')
 
   @classmethod
   def register(self):
