@@ -8,7 +8,7 @@ class Wave(Effect):
   def __init__(self, pixels):
     super().__init__(pixels)
 
-    self.color = (255,255,255)
+    self.color = (0,255,250)
     self.phase = 0
 
     self.rings = []
