@@ -18,7 +18,7 @@ class Rain(Effect):
 
     self.refresh_config()
 
-  def refresh_config(self):
+  def _refresh_config(self):
     self.color = (
       self.config.get('Red').value,
       self.config.get('Green').value,

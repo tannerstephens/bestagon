@@ -95,5 +95,6 @@ def get_configs():
   config['value'] = value
 
   flask_redis.set(config_key, dumps(config))
+  print(f'{effect}_config_refresh')
   flask_redis.set(f'{effect}_config_refresh', 'true')
   return jsonify({'success': True})
