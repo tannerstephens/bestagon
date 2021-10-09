@@ -12,6 +12,7 @@ class Effect:
     self.config = Config(redis_conn, self.config_prefix)
 
     self.setup_config()
+    self.refresh_config()
 
   def run(self):
     raise NotImplementedError
