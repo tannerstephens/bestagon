@@ -9,9 +9,9 @@ class Solid(Effect):
     super().__init__(pixels, r)
 
   def setup_config(self):
-    self.config.add_config('Red', 'number', int, 128)
-    self.config.add_config('Green', 'number', int, 128)
-    self.config.add_config('Blue', 'number', int, 128)
+    self.config.add('Red', 'number', int, 128)
+    self.config.add('Green', 'number', int, 128)
+    self.config.add('Blue', 'number', int, 128)
 
     return super().setup_config()
 

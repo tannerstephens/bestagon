@@ -1,5 +1,6 @@
 const generate_config_inputs = effectName => {
   const configsDiv = document.getElementById('configs');
+  configsDiv.innerHTML = '';
 
   fetch(`/api/configs?effect=${effectName}`)
     .then(resp => resp.json())

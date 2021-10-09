@@ -20,7 +20,11 @@ class Effect:
     self.redis_conn.set(f'{self.config_prefix}config_refresh', 'false')
 
   def refresh_config(self):
+    pass
+
+  def _refresh_config(self):
     refresh = self.redis_conn.get(f'{self.config_prefix}config_refresh') or b''
     if refresh.decode() == 'true':
+      self.refresh_config()
       self.config.refresh()
       self.redis_conn.set(f'{self.config_prefix}config_refresh', 'false')

@@ -10,23 +10,39 @@ class Rain(Effect):
 
   def __init__(self, pixels, r):
     super().__init__(pixels, r)
-    self.color = (255,255,255)
-    self.sleep = 0.05
 
     self.drops = []
-    self.chance = 1
-    self.out_of = 50
-
     self.top = -6
     self.bottom = 6
-
     self.top_width = 7
 
-    self.decay_steps = 7
+    self.refresh_config()
+
+  def refresh_config(self):
+    self.color = (
+      self.config.get('Red').value,
+      self.config.get('Green').value,
+      self.config.get('Blue').value
+    )
+
+    self.sleep = self.config.get('Sleep').value
+
+    self.chance, self.out_of = self.config.get('Chance').as_integer_ratio()
+
+    self.decay_steps = self.config.get('Decay').value
 
     self.dr = math.ceil(self.color[0] // self.decay_steps + 0.5)
     self.dg = math.ceil(self.color[1] // self.decay_steps + 0.5)
     self.db = math.ceil(self.color[2] // self.decay_steps + 0.5)
+
+  def setup_config(self):
+    self.config.add('Red', 'number', int, 255)
+    self.config.add('Green', 'number', int, 255)
+    self.config.add('Blue', 'number', int, 255)
+    self.config.add('Sleep', 'number', float, 0.05)
+    self.config.add('Chance', 'number', float, 1/50)
+    self.config.add('Decay', 'number', int, 7)
+    return super().setup_config()
 
   def run(self):
     for i in range(len(self.pixels)):

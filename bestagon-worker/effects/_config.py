@@ -8,7 +8,7 @@ class Config:
 
     self.configs = {}
 
-  def add_config(self, name, input_type, transform_fn, default_value):
+  def add(self, name, input_type, transform_fn, default_value):
     new_config = ConfigValue(name, input_type, transform_fn, default_value)
 
     if not self.redis_conn.exists(f'{self.config_prefix}{name}'):
