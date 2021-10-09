@@ -27,7 +27,7 @@ class Rain(Effect):
 
     self.sleep = self.config.get('Sleep').value
 
-    self.chance, self.out_of = self.config.get('Chance').as_integer_ratio()
+    self.chance, self.out_of = self.config.get('Chance').value.as_integer_ratio()
 
     self.decay_steps = self.config.get('Decay').value
 
