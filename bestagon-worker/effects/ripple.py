@@ -37,6 +37,8 @@ class Ripple(Effect):
   def __init__(self, pixels, r):
     super().__init__(pixels, r)
 
+    self.ripples = []
+
   def refresh_config(self):
     super().refresh_config()
 
