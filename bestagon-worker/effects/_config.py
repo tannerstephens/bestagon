@@ -22,8 +22,8 @@ class Config:
     return self.configs[name]
 
   def refresh(self):
-    for config in self.configs:
-      config.update(self.redis_conn.get(f'{self.config_prefix}{config.name}').decode())
+    for name, config in self.configs.items():
+      config.update(self.redis_conn.get(f'{self.config_prefix}{name}').decode())
 
 
 class ConfigValue:
