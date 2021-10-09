@@ -20,14 +20,9 @@ class Worker:
     self._load_effects()
 
   def _load_effects(self):
-    for effect in effects:
-      registered_effect = effect.register()
-
-      clazz = registered_effect['class']
-      name = registered_effect['name']
-
-      self.effects[name] = clazz(self.pixels)
-      self.redis_connection.rpush('effects', name)
+    for Effect in effects:
+      self.effects[Effect.NAME] = Effect(self.pixels, self.redis_connection)
+      self.redis_connection.rpush('effects', Effect.NAME)
 
   def run(self):
     self.redis_connection.set('updating', 'false')
@@ -39,9 +34,9 @@ class Worker:
 
       if last_state != state:
         self.pixels.fill((0,0,0))
-        self.pixels.show()
 
       if state in self.effects:
+        self.effects[state].refresh_config()
         self.effects[state].run()
       else:
         self.pixels.fill((0,0,0))

@@ -5,8 +5,8 @@ from time import sleep
 class Wave(Effect):
   NAME = 'Wave'
 
-  def __init__(self, pixels):
-    super().__init__(pixels)
+  def __init__(self, pixels, r):
+    super().__init__(pixels, r)
 
     self.color = (0,255,250)
     self.phase = 0

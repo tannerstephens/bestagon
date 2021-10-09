@@ -38,8 +38,8 @@ class Rip:
 class Firework(Effect):
   NAME = 'Firework'
 
-  def __init__(self, pixels):
-    super().__init__(pixels)
+  def __init__(self, pixels, r):
+    super().__init__(pixels, r)
     self.pixels = pixels
 
     self.chance = 1

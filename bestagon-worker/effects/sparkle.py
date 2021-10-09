@@ -8,8 +8,8 @@ from ._effect import Effect
 class Sparkle(Effect):
   NAME = 'Sparkle'
 
-  def __init__(self, pixels):
-    super().__init__(pixels)
+  def __init__(self, pixels, r):
+    super().__init__(pixels, r)
 
     self.sleep = 0.05
     self.sparkle_color = (36,80,255)

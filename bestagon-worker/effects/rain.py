@@ -8,8 +8,8 @@ from ._effect import Effect
 class Rain(Effect):
   NAME = 'Rain'
 
-  def __init__(self, pixels):
-    super().__init__(pixels)
+  def __init__(self, pixels, r):
+    super().__init__(pixels, r)
     self.color = (255,255,255)
     self.sleep = 0.05
 

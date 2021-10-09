@@ -34,8 +34,8 @@ class Rip:
 class Ripple(Effect):
   NAME = 'Ripple'
 
-  def __init__(self, pixels):
-    super().__init__(pixels)
+  def __init__(self, pixels, r):
+    super().__init__(pixels, r)
     self.color = (255,255,255)
 
     self.chance = 1
