@@ -16,7 +16,7 @@ class Rain(Effect):
     self.bottom = 6
     self.top_width = 7
 
-    self._refresh_config()
+    self.refresh_config()
 
   def refresh_config(self):
     super().refresh_config()
