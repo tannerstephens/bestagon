@@ -24,4 +24,4 @@ if not os.environ.get('SECRET_KEY'):
 
 class Config(object):
   SECRET_KEY = os.environ.get('SECRET_KEY') or key
-  REDIS_URL = "redis://@localhost:6379/0"
+  REDIS_URL = "redis://@hex.lan:6379/0"

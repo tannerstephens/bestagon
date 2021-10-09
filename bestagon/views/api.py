@@ -3,6 +3,8 @@ from flask import Blueprint, request, jsonify
 from ..extensions import flask_redis
 from ..update import check_for_update, update
 
+from json import dumps, loads
+
 api = Blueprint('api', __name__, url_prefix='/api')
 
 @api.route('/state', methods=['GET', 'POST'])
@@ -62,3 +64,36 @@ def get_effects():
   effects_decoded = [effect.decode() for effect in effects]
 
   return jsonify(effects_decoded)
+
+
+@api.route('/configs', methods=['GET', 'POST'])
+def get_configs():
+  if request.method == 'GET':
+    effect = request.args.get('effect')
+
+    config_keys = flask_redis.keys(f'{effect}*')
+
+    configs = []
+
+    for config_key in config_keys:
+      if b'config_refresh' not in config_key:
+        config_json = flask_redis.get(config_key).decode()
+
+        config = loads(config_json)
+        config['key'] = config_key.decode()
+
+        configs.append(config)
+
+    return jsonify(configs)
+
+  config_key = request.json.get('config_key')
+  value = request.json.get('value')
+  effect = config_key.split('_')[0]
+
+  config_json = flask_redis.get(config_key).decode()
+  config = loads(config_json)
+  config['value'] = value
+
+  flask_redis.set(config_key, dumps(config))
+  flask_redis.set(f'{effect}_config_refresh', 'true')
+  return jsonify({'success': True})

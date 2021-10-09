@@ -2,6 +2,10 @@ html {
   background-color: #44484f;
 }
 
+.label {
+  color: #fff !important;
+}
+
 .lds-ring {
   display: inline-block;
   position: relative;
