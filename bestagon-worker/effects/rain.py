@@ -16,7 +16,7 @@ class Rain(Effect):
     self.bottom = 6
     self.top_width = 7
 
-    self.refresh_config()
+    self._refresh_config()
 
   def _refresh_config(self):
     self.color = (
@@ -27,7 +27,10 @@ class Rain(Effect):
 
     self.sleep = self.config.get('Sleep').value
 
-    self.chance, self.out_of = self.config.get('Chance').value.as_integer_ratio()
+    chance, out_of = self.config.get('Chance').value.as_integer_ratio()
+
+    self.chance = chance
+    self.out_of = out_of
 
     self.decay_steps = self.config.get('Decay').value
 
