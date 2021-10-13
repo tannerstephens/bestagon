@@ -80,7 +80,7 @@ class Lightning(Effect):
   def run(self):
     self.pixels.fill((0,0,0))
     if self.bolt is None:
-      self.bolt = Bolt(self.bottom, (random.randint(0, self.top_width-1)))
+      self.bolt = Bolt(self.bottom, (random.randint(0, self.top_width-1), self.top))
       self.bolt_life = self.life
 
     self.bolt_active = self.bolt_active or random.randint(0, self.out_of) < self.chance
