@@ -1,9 +1,8 @@
 import time
-import math
 import random
 
 from ._effect import Effect
-from ..led_map import led_map
+from led_map import led_map
 
 class Bolt:
   def __init__(self, bottom, start):
@@ -94,3 +93,4 @@ class Lightning(Effect):
       self.bolt = None
 
     self.pixels.show()
+    time.sleep(self.sleep)
