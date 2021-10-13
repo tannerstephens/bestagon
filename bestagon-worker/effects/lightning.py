@@ -91,6 +91,7 @@ class Lightning(Effect):
 
     if self.bolt_life <= 0:
       self.bolt = None
+      self.bolt_active = False
 
     self.pixels.show()
     time.sleep(self.sleep)
