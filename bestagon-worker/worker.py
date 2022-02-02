@@ -25,8 +25,6 @@ class Worker:
       self.redis_connection.rpush('effects', Effect.NAME)
 
   def run(self):
-    self.redis_connection.set('updating', 'false')
-
     last_state = None
 
     while True:
