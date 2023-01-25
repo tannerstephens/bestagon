@@ -28,9 +28,13 @@ class Config:
       config.update(self.redis_conn.get(f'{self.config_prefix}{name}').decode())
 
   def clean(self):
-    existing_keys = self.redis_conn.keys(f'{self.config_prefix}*')
+    existing_keys = {key.decode() for key in self.redis_conn.keys(f'{self.config_prefix}*')}
+    real_keys = set(self.configs.keys())
 
-    print(existing_keys)
+    keys_to_remove = existing_keys.difference(real_keys)
+
+    for key in keys_to_remove:
+      self.redis_conn.delete(key)
 
 
 class ConfigValue:
