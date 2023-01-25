@@ -20,12 +20,11 @@ class Wave(Effect):
 
     self.rings.append((126,126))
 
-    self.phase_step = 2*pi / 40
-    self.ring_step = 2*pi / 7
-
   def setup_config(self):
     self.config.add('Color', 'color', tuple, (128,128,128))
     self.config.add('Sleep', 'number', float, 0.05)
+    self.config.add('Phase Step', 'number', float, 2*pi / 40)
+    self.config.add('Ring Step', 'number', float, 2*pi / 7)
 
     return super().setup_config()
 
@@ -33,6 +32,9 @@ class Wave(Effect):
     self.color = self.config.get('Color').value
 
     self.sleep = self.config.get('Sleep').value
+
+    self.phase_step = self.config.get('Phase Step').value
+    self.ring_step = self.config.get('Ring Step').value
 
     return super().refresh_config()
 
