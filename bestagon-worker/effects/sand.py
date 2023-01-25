@@ -21,9 +21,7 @@ class Sand(Effect):
     self.fill = True
 
   def setup_config(self):
-    self.config.add('Red', 'number', int, 255)
-    self.config.add('Green', 'number', int, 255)
-    self.config.add('Blue', 'number', int, 255)
+    self.config.add('Color', 'color', tuple, (128,128,128))
 
     self.config.add('Sleep', 'number', float, 0.05)
     self.config.add('Chance', 'number', float, 1/50)
@@ -35,11 +33,7 @@ class Sand(Effect):
   def refresh_config(self):
     super().refresh_config()
 
-    self.color = (
-      self.config.get('Red').value,
-      self.config.get('Green').value,
-      self.config.get('Blue').value
-    )
+    self.color = self.config.get('Color').value
 
     self.sleep = self.config.get('Sleep').value
 

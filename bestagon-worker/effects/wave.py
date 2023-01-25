@@ -8,12 +8,9 @@ class Wave(Effect):
   def __init__(self, pixels, r):
     super().__init__(pixels, r)
 
-    self.color = (0,255,250)
     self.phase = 0
 
     self.rings = []
-
-    self.sleep = 0.05
 
     l = 0
 
@@ -25,6 +22,19 @@ class Wave(Effect):
 
     self.phase_step = 2*pi / 40
     self.ring_step = 2*pi / 7
+
+  def setup_config(self):
+    self.config.add('Color', 'color', tuple, (128,128,128))
+    self.config.add('Sleep', 'number', float, 0.05)
+
+    return super().setup_config()
+
+  def refresh_config(self):
+    self.color = self.config.get('Color').value
+
+    self.sleep = self.config.get('Sleep').value
+
+    return super().refresh_config()
 
   def run(self):
     self.phase += self.phase_step

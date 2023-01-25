@@ -9,18 +9,12 @@ class Solid(Effect):
     super().__init__(pixels, r)
 
   def setup_config(self):
-    self.config.add('Red', 'number', int, 128)
-    self.config.add('Green', 'number', int, 128)
-    self.config.add('Blue', 'number', int, 128)
+    self.config.add('Color', 'color', tuple, (128,128,128))
 
     return super().setup_config()
 
   def run(self):
-    self.color = (
-      self.config.get('Red').value,
-      self.config.get('Green').value,
-      self.config.get('Blue').value
-    )
+    self.color = self.config.get('Color').value
 
     self.pixels.fill(self.color)
     self.pixels.show()
