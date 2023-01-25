@@ -19,10 +19,6 @@ class Sparkle(Effect):
   def setup_config(self):
     self.config.add('Color', 'color', tuple, (128,128,128))
 
-    self.config.add('Red', 'number', int, 128)
-    self.config.add('Green', 'number', int, 128)
-    self.config.add('Blue', 'number', int, 128)
-
     self.config.add('Sleep', 'number', float, 0.05)
     self.config.add('Chance', 'number', float, 1/500)
     self.config.add('Decay', 'number', int, 7)
@@ -32,11 +28,7 @@ class Sparkle(Effect):
   def refresh_config(self):
     super().refresh_config()
 
-    self.color = (
-      self.config.get('Red').value,
-      self.config.get('Green').value,
-      self.config.get('Blue').value
-    )
+    self.color = self.config.get('Color').value
 
     self.sleep = self.config.get('Sleep').value
 
