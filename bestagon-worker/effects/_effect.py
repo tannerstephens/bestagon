@@ -14,6 +14,8 @@ class Effect:
     self.setup_config()
     self.refresh_config()
 
+    self.config.clean()
+
   def run(self):
     raise NotImplementedError
 

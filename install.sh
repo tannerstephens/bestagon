@@ -10,3 +10,5 @@ systemctl enable bestagon-worker
 
 systemctl restart bestagon-worker
 systemctl restart bestagon-web
+
+redis-cli set updating false

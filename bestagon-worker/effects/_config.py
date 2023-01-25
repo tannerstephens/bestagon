@@ -1,8 +1,10 @@
 from json import loads, dumps
 
+from redis import Redis
+
 
 class Config:
-  def __init__(self, redis_conn, config_prefix):
+  def __init__(self, redis_conn: Redis, config_prefix):
     self.redis_conn = redis_conn
     self.config_prefix = config_prefix
 
@@ -24,6 +26,15 @@ class Config:
   def refresh(self):
     for name, config in self.configs.items():
       config.update(self.redis_conn.get(f'{self.config_prefix}{name}').decode())
+
+  def clean(self):
+    existing_keys = {key.decode() for key in self.redis_conn.keys(f'{self.config_prefix}*')}
+    real_keys = {f'{self.config_prefix}{key}' for key in self.configs.keys()}
+
+    keys_to_remove = existing_keys.difference(real_keys)
+
+    for key in keys_to_remove:
+      self.redis_conn.delete(key)
 
 
 class ConfigValue:
