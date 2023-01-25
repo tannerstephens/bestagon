@@ -4,15 +4,15 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-pillow = "*"
-rpi-ws281x = "*"
-adafruit-circuitpython-neopixel = "*"
-adafruit-blinka = "*"
-redis = "*"
-flask = "*"
-gunicorn = "*"
-"rpi.gpio" = "*"
-flask-redis = "*"
+pillow = "==8.3.2"
+rpi-ws281x = "==4.3.0"
+adafruit-circuitpython-neopixel = "==6.2.1"
+adafruit-blinka = "==6.13.1"
+redis = "==3.5.3"
+flask = "==2.0.1"
+gunicorn = "==20.1.0"
+"rpi.gpio" = "==0.7.0"
+flask-redis = "==0.4.0"
 
 [dev-packages]
 
