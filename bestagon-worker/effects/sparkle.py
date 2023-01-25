@@ -17,6 +17,8 @@ class Sparkle(Effect):
     self.flash = [0 for _ in range(len(self.pixels))]
 
   def setup_config(self):
+    self.config.add('Color', 'color', tuple, (128,128,128))
+
     self.config.add('Red', 'number', int, 128)
     self.config.add('Green', 'number', int, 128)
     self.config.add('Blue', 'number', int, 128)

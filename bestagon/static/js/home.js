@@ -8,12 +8,23 @@ const generate_config_inputs = effectName => {
       data.forEach(config => {
         const configField = document.createElement('div');
         configField.classList.add('field')
-        configField.innerHTML = `
+
+        if(config.input_type === 'color') {
+
+          configField.innerHTML = `
           <label class="label">${config.name}</label>
           <div class="control">
-            <input class="input" type="${config.input_type}" value="${config.value}" id="${config.key}">
+            <input data-jscolor="{format: 'rgb'}" id="${config.key}">
           </div>
-        `;
+          `
+        } else {
+          configField.innerHTML = `
+            <label class="label">${config.name}</label>
+            <div class="control">
+              <input class="input" type="${config.input_type}" value="${config.value}" id="${config.key}">
+            </div>
+          `;
+        }
 
         configsDiv.appendChild(configField);
 
