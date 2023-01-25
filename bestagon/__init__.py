@@ -1,10 +1,7 @@
 from flask import Flask
 
+from .extensions import flask_redis
 from .views import register_views
-
-from .extensions import (
-  flask_redis
-)
 
 VERSION = '0.0.4'
 
