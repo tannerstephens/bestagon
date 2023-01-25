@@ -1,8 +1,10 @@
 from json import loads, dumps
 
+from redis import Redis
+
 
 class Config:
-  def __init__(self, redis_conn, config_prefix):
+  def __init__(self, redis_conn: Redis, config_prefix):
     self.redis_conn = redis_conn
     self.config_prefix = config_prefix
 
@@ -24,6 +26,11 @@ class Config:
   def refresh(self):
     for name, config in self.configs.items():
       config.update(self.redis_conn.get(f'{self.config_prefix}{name}').decode())
+
+  def clean(self):
+    existing_keys = self.redis_conn.keys(f'{self.config_prefix}*')
+
+    print(existing_keys)
 
 
 class ConfigValue:

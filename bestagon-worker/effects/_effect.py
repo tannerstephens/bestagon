@@ -18,7 +18,7 @@ class Effect:
     raise NotImplementedError
 
   def setup_config(self):
-    pass
+    self.config.clean()
 
   def refresh_config(self):
     self.config.refresh()
