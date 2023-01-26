@@ -97,7 +97,6 @@ def get_configs():
   pipeline = flask_redis.pipeline()
   pipeline.multi()
   pipeline.set(config_key, dumps(config))
-  pipeline.set(f'{effect}_config_refresh', 'true')
   pipeline.execute()
 
   return jsonify({'success': True})
