@@ -12,9 +12,8 @@ class Photo(Effect):
   NAME = 'Photo'
 
   def __init__(self, pixels, redis_conn):
-    super().__init__(pixels, redis_conn)
-
     self.data_url = None
+    super().__init__(pixels, redis_conn)
 
   def setup_config(self):
     self.config.add('Photo', 'image', str, '')
