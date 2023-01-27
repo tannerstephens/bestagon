@@ -33,11 +33,11 @@ class Photo(Effect):
       y = (2 * 1.5 * r)+18
 
       (red, green, blue) = image.getpixel((x,y))[:3]
-      red *= self.brightness
-      green *= self.brightness
-      blue *= self.brightness
+      red *= int(self.brightness)
+      green *= int(self.brightness)
+      blue *= int(self.brightness)
 
-      self.pixels[led_map[(q,r)]] = (red, green, blue)
+      self.pixels[led_map[(q,r)]] = [red, green, blue]
 
     self.pixels.show()
     time.sleep(1)
