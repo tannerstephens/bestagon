@@ -25,8 +25,7 @@ class Photo(Effect):
 
     if new_data_url != self.data_url:
       self.data_url = new_data_url
-
-    self.image = self.get_image(self.data_url)
+      self.image = self.get_image()
 
     self.brightness = self.config.get('Brightness').value
 
