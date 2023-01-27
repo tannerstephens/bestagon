@@ -32,7 +32,7 @@ class Photo(Effect):
   def get_image(self):
     base64 = self.data_url.split(',')[1]
 
-    return Image.open(BytesIO(b64decode(base64)))
+    return Image.open(BytesIO(b64decode(base64))).resize((42,42))
 
   def run(self):
     for (q,r) in led_map:
