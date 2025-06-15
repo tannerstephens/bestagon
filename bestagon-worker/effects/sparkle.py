@@ -16,12 +16,16 @@ class Sparkle(Effect):
 
     self.flash = [0 for _ in range(len(self.pixels))]
 
+    self.flash_enabled = True
+
   def setup_config(self):
     self.config.add('Color', 'color', tuple, (128,128,128))
 
     self.config.add('Sleep', 'number', float, 0.05)
     self.config.add('Chance', 'number', float, 1/500)
     self.config.add('Decay', 'number', int, 7)
+
+    self.config.add('Flash', 'checkbox', int, 1)
 
     return super().setup_config()
 
@@ -36,13 +40,15 @@ class Sparkle(Effect):
 
     self.decay_steps = self.config.get('Decay').value
 
+    self.flash_enabled = self.config.get('Flash').value
+
     self.dr = math.ceil(self.color[0] // self.decay_steps + 0.5)
     self.dg = math.ceil(self.color[1] // self.decay_steps + 0.5)
     self.db = math.ceil(self.color[2] // self.decay_steps + 0.5)
 
   def run(self):
     for i in range(len(self.pixels)):
-      if self.pixels[i] != [0,0,0]:
+      if any(self.pixels[i]):
         if self.flash[i]:
           self.flash[i] -= 1
 
@@ -53,7 +59,10 @@ class Sparkle(Effect):
           self.pixels[i] = (max(p[0] - self.dr,0),max(p[1] - self.dg,0),max(p[2] - self.db,0))
 
       if random.randint(0,self.out_of) < self.chance:
-        self.pixels[i] = self.flash_color
-        self.flash[i] = self.flash_steps
+        if self.flash_enabled:
+          self.pixels[i] = self.flash_color
+          self.flash[i] = self.flash_steps
+        else:
+          self.pixels[i] = self.color
     self.pixels.show()
     time.sleep(self.sleep)

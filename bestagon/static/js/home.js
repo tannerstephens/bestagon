@@ -47,11 +47,20 @@ const generate_config_inputs = effectName => {
             </label>
           </div>
           `;
+        } else if (config.input_type === 'checkbox') {
+          const checked = config.value === '1' ? 'checked' : ''
+
+          configField.innerHTML = `
+            <label class="label">${config.name}</label>
+            <div class="control">
+              <input type="checkbox" value="${config.value}" id="${config.key}" ${checked}>
+            </div>
+          `
         } else {
           configField.innerHTML = `
             <label class="label">${config.name}</label>
             <div class="control">
-              <input class="input" type="${config.input_type}" value="${config.value}" id="${config.key}">
+              <input class="input" type="${config.input_type}" id="${config.key}">
             </div>
           `;
         }
@@ -70,6 +79,8 @@ const generate_config_inputs = effectName => {
               configField.getElementsByTagName('img')[0].src = value;
               return value;
             });
+          } else if(config.input_type === 'checkbox') {
+            value_promise = Promise.resolve(input.checked ? '1' : '0')
           }
 
           value_promise.then(value => {
