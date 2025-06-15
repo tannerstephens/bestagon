@@ -53,14 +53,14 @@ const generate_config_inputs = effectName => {
           configField.innerHTML = `
             <label class="label">${config.name}</label>
             <div class="control">
-              <input type="checkbox" value="${config.value}" id="${config.key}" ${checked}>
+              <input type="checkbox" id="${config.key}" ${checked}>
             </div>
           `
         } else {
           configField.innerHTML = `
             <label class="label">${config.name}</label>
             <div class="control">
-              <input class="input" type="${config.input_type}" id="${config.key}">
+              <input class="input" type="${config.input_type}" id="${config.key}" value="${config.value}" >
             </div>
           `;
         }
