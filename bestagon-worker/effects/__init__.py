@@ -1,3 +1,4 @@
+from .bounce import Bounce
 from .fire import Fire
 from .firework import Firework
 from .lightning import Lightning
@@ -11,6 +12,7 @@ from .wave import Wave
 
 effects = (
   Photo,
+  Bounce,
   Fire,
   Firework,
   Lightning,
