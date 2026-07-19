@@ -1,43 +1,542 @@
-html {
-  background-color: #44484f;
+:root {
+  --bg: #0a0c11;
+  --panel: #14171f;
+  --panel-raised: #1b1f29;
+  --border: #262b38;
+  --border-strong: #363c4d;
+  --text: #eef0f4;
+  --text-muted: #8a92a6;
+  --text-faint: #565d70;
+  --accent: #ffa63d;
+  --accent-strong: #ff8a1f;
+  --accent-soft: rgba(255, 166, 61, 0.14);
+  --success: #5fd68a;
+  --radius: 6px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  --mono: ui-monospace, "SF Mono", "Cascadia Code", "Roboto Mono", monospace;
 }
 
-.label {
-  color: #fff !important;
+* {
+  box-sizing: border-box;
 }
 
-.lds-ring {
+html, body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background-image:
+    radial-gradient(ellipse 900px 500px at 15% -10%, rgba(255, 166, 61, 0.07), transparent 60%),
+    repeating-linear-gradient(60deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 44px),
+    repeating-linear-gradient(-60deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 44px),
+    repeating-linear-gradient(0deg, rgba(255, 255, 255, 0.012) 0px, rgba(255, 255, 255, 0.012) 1px, transparent 1px, transparent 44px);
+  min-height: 100vh;
+}
+
+.hex {
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+}
+
+.is-hidden {
+  display: none !important;
+}
+
+a {
+  color: inherit;
+}
+
+/* ---------- Nav ----------
+   Mobile-first: this panel is almost always driven from a phone, so the
+   base layout below IS the phone layout (two rows, full-width tab bar).
+   The >=640px query collapses it back to a single desktop row. */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px 14px;
+  padding: 10px 14px;
+  background: rgba(10, 12, 17, 0.88);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--border);
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-right: auto;
+  text-decoration: none;
+}
+
+.brand-mark {
+  width: 22px;
+  height: 22px;
+  flex-shrink: 0;
+  background: linear-gradient(155deg, var(--accent), var(--accent-strong));
+  box-shadow: 0 0 16px rgba(255, 166, 61, 0.45);
+}
+
+.brand-word {
+  font-weight: 700;
+  font-size: 15px;
+  letter-spacing: 0.02em;
+  color: var(--text);
+}
+
+.nav-links {
+  display: flex;
+  gap: 4px;
+  order: 3;
+  width: 100%;
+}
+
+.nav-link {
+  flex: 1;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: var(--radius);
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: color 0.15s, background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.nav-link:hover {
+  color: var(--text);
+  background: var(--panel-raised);
+}
+
+.nav-link.active {
+  color: var(--accent);
+  background: var(--accent-soft);
+  border-color: rgba(255, 166, 61, 0.25);
+}
+
+.status-pill {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 12px 6px 10px;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  font-size: 12.5px;
+  color: var(--text-muted);
+  background: var(--panel);
+  white-space: nowrap;
+}
+
+.status-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent);
+  box-shadow: 0 0 0 3px var(--accent-soft);
+  animation: pulse 2.4s ease-in-out infinite;
+}
+
+.status-dot.idle {
+  background: var(--text-faint);
+  box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.04);
+  animation: none;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.45; }
+}
+
+@media (min-width: 640px) {
+  .nav { flex-wrap: nowrap; gap: 28px; padding: 14px 28px; }
+  .nav-links { order: 0; width: auto; }
+  .nav-link { flex: none; padding: 7px 14px; }
+}
+
+/* ---------- Layout ---------- */
+main {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 20px 16px 48px;
+}
+
+@media (min-width: 640px) {
+  main { padding: 40px 24px 80px; }
+}
+
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--text-faint);
+  margin: 0 0 8px;
+}
+
+/* ---------- Effect selector ---------- */
+.effect-card {
+  padding: 16px 18px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  margin-bottom: 20px;
+}
+
+@media (min-width: 640px) {
+  .effect-card { padding: 20px 24px; margin-bottom: 28px; }
+}
+
+.select-wrap {
+  position: relative;
+}
+
+select {
+  appearance: none;
+  width: 100%;
+  background: var(--panel-raised);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-family: var(--font);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: border-color 0.15s;
+}
+
+select:hover, select:focus {
+  border-color: var(--accent);
+  outline: none;
+}
+
+.select-wrap::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  border-right: 2px solid var(--text-muted);
+  border-bottom: 2px solid var(--text-muted);
+  transform: translateY(-65%) rotate(45deg);
+  pointer-events: none;
+}
+
+/* hero select: the effect picker doubles as the page's opener, so it
+   carries the display-scale type instead of a separate duplicate title */
+.select-wrap-hero select {
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  padding: 10px 44px 10px 2px;
+  border: none;
+  background: transparent;
+}
+
+.select-wrap-hero select:hover, .select-wrap-hero select:focus {
+  border: none;
+  color: var(--accent);
+}
+
+.select-wrap-hero::after {
+  right: 6px;
+  width: 11px;
+  height: 11px;
+}
+
+/* ---------- Config grid ---------- */
+.config-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 14px;
+}
+
+.tile {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.tile-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+/* text / number inputs, and the jscolor-driven color input */
+input[type="number"], input[type="text"] {
+  background: var(--panel-raised);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-family: var(--mono);
+  font-variant-numeric: tabular-nums;
+  font-size: 14px;
+  padding: 9px 12px;
+  border-radius: var(--radius);
+  width: 100%;
+}
+
+input[type="number"]:focus, input[type="text"]:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+/* ---------- Toggle (checkbox configs) ----------
+   Whole row is the tap target, not just the pill, since this is
+   almost always operated by thumb. Pure CSS via the checked sibling
+   selector so home.js's existing input.onchange logic needs no change. */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  cursor: pointer;
+  margin: -6px -4px;
+  padding: 6px 4px;
+  border-radius: var(--radius);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.toggle-row:hover {
+  background: var(--panel-raised);
+}
+
+.toggle-shell {
+  position: relative;
+  width: 46px;
+  height: 27px;
+  flex-shrink: 0;
+}
+
+.toggle-input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  margin: 0;
+  cursor: pointer;
+}
+
+.toggle-track {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: var(--panel-raised);
+  border: 1px solid var(--border-strong);
+  pointer-events: none;
+}
+
+.toggle-track::after {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 21px;
+  height: 21px;
+  border-radius: 50%;
+  background: var(--text-muted);
+  transition: transform 0.15s, background 0.15s;
+}
+
+.toggle-input:checked ~ .toggle-track {
+  background: var(--accent-soft);
+  border-color: var(--accent);
+}
+
+.toggle-input:checked ~ .toggle-track::after {
+  transform: translateX(19px);
+  background: var(--accent);
+}
+
+.toggle-input:focus-visible ~ .toggle-track {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Image config ---------- */
+.image-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.thumb {
+  width: 52px;
+  height: 52px;
+  object-fit: cover;
+  flex-shrink: 0;
+  background: var(--panel-raised);
+}
+
+.file-input {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ---------- Buttons ---------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 10px 18px;
+  border-radius: var(--radius);
+  font-size: 13.5px;
+  font-weight: 600;
+  cursor: pointer;
+  border: 1px solid var(--border-strong);
+  background: var(--panel-raised);
+  color: var(--text);
+  transition: border-color 0.15s, background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:hover {
+  border-color: var(--text-faint);
+}
+
+.btn-file {
+  font-size: 13px;
+  padding: 9px 14px;
+}
+
+.btn-primary {
+  background: linear-gradient(155deg, var(--accent), var(--accent-strong));
+  border-color: transparent;
+  color: #1a1002;
+  box-shadow: 0 4px 20px rgba(255, 138, 31, 0.25);
+  width: 100%;
+  padding: 13px 18px;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.06);
+}
+
+.btn:disabled, .btn[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+  filter: none;
+  box-shadow: none;
+}
+
+@media (min-width: 640px) {
+  .btn-primary { width: auto; }
+}
+
+/* ---------- Update page ---------- */
+.update-card {
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 28px 20px;
+  text-align: center;
+}
+
+@media (min-width: 640px) {
+  .update-card { padding: 40px; }
+}
+
+.update-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-size: 12.5px;
+  font-weight: 600;
+  margin-bottom: 22px;
+  background: var(--panel-raised);
+  color: var(--text-muted);
+  border: 1px solid var(--border);
+}
+
+.update-badge.available {
+  background: var(--accent-soft);
+  color: var(--accent);
+  border-color: rgba(255, 166, 61, 0.3);
+}
+
+.update-badge.current {
+  background: rgba(95, 214, 138, 0.12);
+  color: var(--success);
+  border-color: rgba(95, 214, 138, 0.28);
+}
+
+.update-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin: 0 0 8px;
+}
+
+.update-sub {
+  color: var(--text-muted);
+  font-size: 14px;
+  margin: 0 0 26px;
+}
+
+.ring {
   display: inline-block;
   position: relative;
-  width: 80px;
-  height: 80px;
+  width: 54px;
+  height: 54px;
+  margin-top: 26px;
 }
-.lds-ring div {
+
+.ring div {
   box-sizing: border-box;
   display: block;
   position: absolute;
-  width: 64px;
-  height: 64px;
-  margin: 8px;
-  border: 8px solid #fff;
+  width: 44px;
+  height: 44px;
+  margin: 5px;
+  border: 4px solid var(--accent);
   border-radius: 50%;
-  animation: lds-ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
-  border-color: #fff transparent transparent transparent;
+  animation: ring 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite;
+  border-color: var(--accent) transparent transparent transparent;
 }
-.lds-ring div:nth-child(1) {
-  animation-delay: -0.45s;
+
+.ring div:nth-child(1) { animation-delay: -0.45s; }
+.ring div:nth-child(2) { animation-delay: -0.3s; }
+.ring div:nth-child(3) { animation-delay: -0.15s; }
+
+@keyframes ring {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
-.lds-ring div:nth-child(2) {
-  animation-delay: -0.3s;
+
+@media (prefers-reduced-motion: reduce) {
+  .status-dot, .ring div { animation: none; }
 }
-.lds-ring div:nth-child(3) {
-  animation-delay: -0.15s;
+
+/* ---------- jscolor override ----------
+   jscolor injects its own inline background/padding onto the target
+   input (that's how the live color preview renders); we only need to
+   give the input the same shell as the other tile inputs. */
+input[data-jscolor] {
+  background: var(--panel-raised);
+  border: 1px solid var(--border-strong);
+  color: var(--text);
+  font-family: var(--mono);
+  font-size: 14px;
+  padding: 9px 12px;
+  border-radius: var(--radius);
+  width: 100%;
 }
-@keyframes lds-ring {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
+
+.jscolor-btn {
+  font-family: var(--font) !important;
 }

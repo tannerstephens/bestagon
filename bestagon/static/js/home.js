@@ -18,32 +18,21 @@ const generate_config_inputs = effectName => {
     .then(data => {
       data.forEach(config => {
         const configField = document.createElement('div');
-        configField.classList.add('field')
+        configField.classList.add('tile')
 
         if(config.input_type === 'color') {
           configField.innerHTML = `
-          <label class="label">${config.name}</label>
-          <div class="control">
-            <input class="input" data-jscolor="{format: 'hex'}" id="${config.key}" value="rgb(${config.value[0]},${config.value[1]},${config.value[2]})">
-          </div>
+          <div class="tile-label">${config.name}</div>
+          <input data-jscolor="{format: 'hex'}" id="${config.key}" value="rgb(${config.value[0]},${config.value[1]},${config.value[2]})">
           `;
         } else if(config.input_type === 'image') {
           configField.innerHTML = `
-          <figure class="image is-64x64">
-            <img src="${config.value}">
-          </figure>
-
-          <div class="file">
-            <label class="file-label">
+          <div class="tile-label">${config.name}</div>
+          <div class="image-row">
+            <img class="thumb hex" src="${config.value}">
+            <label class="btn btn-file">
+              Choose file
               <input class="file-input" type="file" id="${config.key}" accept="image/*">
-              <span class="file-cta">
-                <span class="file-icon">
-                  <i class="fa fa-upload"></i>
-                </span>
-                <span class="file-label">
-                  Choose a file…
-                </span>
-              </span>
             </label>
           </div>
           `;
@@ -51,17 +40,18 @@ const generate_config_inputs = effectName => {
           const checked = config.value === '1' ? 'checked' : ''
 
           configField.innerHTML = `
-            <label class="label">${config.name}</label>
-            <div class="control">
-              <input type="checkbox" id="${config.key}" ${checked}>
-            </div>
+            <label class="toggle-row">
+              <span class="tile-label">${config.name}</span>
+              <span class="toggle-shell">
+                <input class="toggle-input" type="checkbox" id="${config.key}" ${checked}>
+                <span class="toggle-track"></span>
+              </span>
+            </label>
           `
         } else {
           configField.innerHTML = `
-            <label class="label">${config.name}</label>
-            <div class="control">
-              <input class="input" type="${config.input_type}" id="${config.key}" value="${config.value}" >
-            </div>
+            <div class="tile-label">${config.name}</div>
+            <input type="${config.input_type}" id="${config.key}" value="${config.value}">
           `;
         }
 
@@ -125,6 +115,7 @@ window.onload = () => {
           } else {
             stateSelect.selectedIndex = '0';
           }
+          setStatusPill(stateSelect.value);
           generate_config_inputs(stateSelect.value);
         });
     });
@@ -136,6 +127,7 @@ window.onload = () => {
       body: JSON.stringify({state: stateSelect.value})
     });
 
+    setStatusPill(stateSelect.value);
     generate_config_inputs(stateSelect.value);
   };
 }
