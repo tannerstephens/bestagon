@@ -29,11 +29,11 @@ class Bounce(Effect):
   NAME = 'Bounce'
 
   def __init__(self, pixels, r):
-    super().__init__(pixels, r)
-
     self.cells = list(led_map.keys())
 
     self.balls = []
+
+    super().__init__(pixels, r)
 
   def setup_config(self):
     self.config.add('Color', 'color', tuple, (128,128,128))
