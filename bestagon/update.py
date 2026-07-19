@@ -6,18 +6,26 @@ from .extensions import flask_redis
 
 
 def update():
-  threading.Thread(target=_update).start()
+    threading.Thread(target=_update).start()
+
 
 def check_for_update():
-  subprocess.call(['git', 'remote', 'update'])
-  git_status = subprocess.Popen(['git', 'status', '-uno'], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-  out, _ = git_status.communicate()
+    subprocess.call(["git", "remote", "update"])
+    git_status = subprocess.Popen(
+        ["git", "status", "-uno"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+    )
+    out, _ = git_status.communicate()
 
-  return 'Your branch is behind' in out.decode()
+    return "Your branch is behind" in out.decode()
+
 
 def _update():
-  cwd = getcwd()
+    cwd = getcwd()
 
-  flask_redis.set('updating', 'true')
-  subprocess.call(['git', 'pull'], cwd='/srv/bestagon/')
-  subprocess.call(['/bin/bash', f'{cwd}/install.sh'])
+    flask_redis.set("updating", "true")
+    subprocess.call(["git", "pull"], cwd="/srv/bestagon/")
+
+    with open("/tmp/update.log", "w") as log_file:
+        subprocess.call(
+            ["/bin/bash", f"{cwd}/install.sh"], stdout=log_file, stderr=subprocess.STDOUT
+        )
