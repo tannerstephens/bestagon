@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Bestagon{% endblock %}</title>
+    <link rel="stylesheet" href="/static/css/styles.css">
+    {% block head %}{% endblock %}
+  </head>
+
+  <body>
+    <nav class="nav">
+      <a class="brand" href="/">
+        <div class="brand-mark hex"></div>
+        <div class="brand-word">BESTAGON</div>
+      </a>
+      <div class="nav-links">
+        <a class="nav-link {{ 'active' if active_page == 'control' }}" href="/">Control</a>
+        <a class="nav-link {{ 'active' if active_page == 'update' }}" href="/update">Update</a>
+      </div>
+      <div class="status-pill">
+        <span class="status-dot" id="statusDot"></span>
+        <span id="statusText">&nbsp;</span>
+      </div>
+    </nav>
+
+    <main>
+      {% block content %}{% endblock %}
+    </main>
+
+    <script src="/static/js/nav.js"></script>
+    {% block scripts %}{% endblock %}
+  </body>
+</html>
